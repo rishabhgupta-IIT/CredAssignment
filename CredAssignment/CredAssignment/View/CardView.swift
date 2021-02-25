@@ -42,42 +42,75 @@ class CardView: UIView {
     private func setupUI() {
         switch state {
         case .expanded:
-            topCollapsedView.isHidden = true
-            expandedView.isHidden = false
-            bottomCollapsedView.isHidden = true
-            
             topCollapsedLabel.alpha = 0
             centerExpandedLabel.alpha = 1
             bottomCollapsedLabel.alpha = 0
+            UIView.animate(withDuration: 1) {
+                if !self.topCollapsedView.isHidden {
+                    self.topCollapsedView.isHidden = true
+                }
+                
+                self.expandedView.isHidden = false
+                
+                if !self.bottomCollapsedView.isHidden {
+                    self.bottomCollapsedView.isHidden = true
+                }
+            }
             
         case .hidden:
-            topCollapsedView.isHidden = true
-            expandedView.isHidden = true
-            bottomCollapsedView.isHidden = true
-            
             topCollapsedLabel.alpha = 0
             centerExpandedLabel.alpha = 0
             bottomCollapsedLabel.alpha = 0
+            UIView.animate(withDuration: 1) {
+                if !self.topCollapsedView.isHidden {
+                    self.topCollapsedView.isHidden = true
+                }
+                
+                if !self.expandedView.isHidden {
+                    self.expandedView.isHidden = true
+                }
+                
+                if !self.bottomCollapsedView.isHidden {
+                    self.bottomCollapsedView.isHidden = true
+                }
+            }
             
         case .topCollapsed:
-            topCollapsedView.isHidden = false
-            expandedView.isHidden = true
-            bottomCollapsedView.isHidden = true
             
             topCollapsedLabel.alpha = 1
             centerExpandedLabel.alpha = 0
             bottomCollapsedLabel.alpha = 0
             
+            UIView.animate(withDuration: 1) {
+                self.topCollapsedView.isHidden = false
+                
+                if !self.expandedView.isHidden {
+                    self.expandedView.isHidden = true
+                }
+                
+                if !self.bottomCollapsedView.isHidden {
+                    self.bottomCollapsedView.isHidden = true
+                }
+            }
+            
         case .bottomCollapsed:
-            topCollapsedView.isHidden = true
-            expandedView.isHidden = true
-            bottomCollapsedView.isHidden = false
             
             topCollapsedLabel.alpha = 0
             centerExpandedLabel.alpha = 0
             bottomCollapsedLabel.alpha = 1
+            
+            UIView.animate(withDuration: 1) {
+                if !self.topCollapsedView.isHidden {
+                    self.topCollapsedView.isHidden = true
+                }
+                
+                if !self.expandedView.isHidden {
+                    self.expandedView.isHidden = true
+                }
+                
+                self.bottomCollapsedView.isHidden = false
+            }
         }
-
     }
     
     func withState(_ state: CardState) -> Self {
